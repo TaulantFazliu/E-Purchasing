@@ -1,0 +1,56 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: FEEDBACK-SERVICE
+          uri: lb://FEEDBACK-SERVICE
+          predicates:
+            - Path=/api/feedback/**
+        - id: MARKET-MANAGEMENT-SERVICE
+          uri: lb://MARKET-MANAGEMENT-SERVICE
+          predicates:
+            - Path=/api/market/**
+            - Path=/api/admin/**
+            - Path=/api/product/**
+            - Path=/api/owner/**
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/purchase/**
+            - Path=/api/cart/**
+            - Path=/api/wishlist/**
+            - Path=/api/shipping/**
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payment/**
+            - Path=/api/creditcard/**
+            - Path=/api/paypal/**
+        - id: SEARCH-ENGINE-SERVICE
+          uri: lb://SEARCH-ENGINE-SERVICE
+          predicates:
+            - Path=/api/search/**
+        - id: SHIPPING-SERVICE
+          uri: lb://SHIPPING-SERVICE
+          predicates:
+            - Path=/api/customer/**
+        - id: TRACKING-SERVICE
+          uri: lb://TRACKING-SERVICE
+          predicates:
+            - Path=/api/tracking/**
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
